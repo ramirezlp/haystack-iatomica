@@ -5,8 +5,9 @@ from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.prebuilt import create_react_agent
+from dotenv import load_dotenv 
 
-#os.environ["OPENAI_API_KEY"] = ""
+load_dotenv()
 
 def setup_database():
     conn = sqlite3.connect("autos.db")
@@ -40,7 +41,7 @@ def insert_auto(conn, marca, modelo, año, cilindrada, precio, combustible, tran
         ''', (marca, modelo, año, cilindrada, precio, combustible, transmisión, color, kilometraje, puertas, carrocería))
         conn.commit()
     except sqlite3.IntegrityError:
-        print(f"El auto {marca} {modelo} del año {año} ya existe en la base de datos.")
+        pass
 
 def populate_database(conn):
     autos = [
